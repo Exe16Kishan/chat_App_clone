@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export default function Filter() {
   
     const filterButton = [
-    { id: "all", lebel: "All Chats" },
+    { id: "allChat", lebel: "All Chats" },
     { id: "group", lebel: "Group" },
     { id: "contact", lebel: "Contact" },
   ];
@@ -15,18 +15,18 @@ export default function Filter() {
   };
 
   return (
-    <View className="mt-5 mx-7 h-16 rounded-full flex flex-row justify-evenly items-center bg-slate-200">
+    <View className="mb-2 mx-7 h-14 rounded-full flex flex-row justify-evenly items-center bg-slate-200">
       {filterButton.map((button) => (
         <TouchableOpacity
         key={button.id}
           className={`flex-1 h-full justify-center items-center rounded-full ${
-            active === button.id ? "bg-blue-500" : ""
+            active === button.id ? "bg-gray-400" : ""
           }`}
           onPress={() => changeColor(button.id)}
         >
           <Text
-            className={`text-xl ${
-              active === "allChat" ? "text-white" : "text-black"
+            className={`text-lg font-medium ${
+              active === button.id  ? "text-white" : "text-gray-600"
             }`}
           >
             {button.lebel}
