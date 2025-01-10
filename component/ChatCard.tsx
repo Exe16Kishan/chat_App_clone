@@ -5,8 +5,8 @@ import React from 'react'
 export default function ChatCard({data}:any) {
 
   return (
-    <TouchableOpacity className="flex-row justify-between items-center px-6 py-4 mt-2 bg-gray-100 rounded-xl mx-3 ">
-      <View className="flex-row items-center gap-6">
+    <View className="flex-1 flex-row justify-between items-center px-6 py-4  bg-gray-100 rounded-xl  ">
+      <View className="flex-1 flex-row items-center gap-6">
         <Image
           source={require("../assets/images/profile.png")}
           contentFit="cover"
@@ -18,15 +18,15 @@ export default function ChatCard({data}:any) {
         </View>
       </View>
       
-      <View className="items-end">
+      <View className="flex-1 items-end">
         <Text className="text-xs text-gray-500">{data.time}</Text>
         {
           data.noti > 0 && 
           <View className="h-5 w-5 rounded-full bg-gray-600 items-center justify-center mt-1">
-          <Text className="text-xs text-white font-medium">2</Text>
+          <Text className="text-xs text-white font-medium">{data.noti}</Text>
         </View>
         }
       </View>
-    </TouchableOpacity>
+    </View>
   )
  }

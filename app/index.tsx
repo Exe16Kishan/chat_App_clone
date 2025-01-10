@@ -1,7 +1,8 @@
 import ChatCard from "@/component/ChatCard";
 import Filter from "@/component/Filter";
 import Nav from "@/component/Nav";
-import { ScrollView, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 const dummyData = [
   {name:"Prince" , msg :" lets see" , time :"09:00 AM", noti :0},
   {name:"Aman" , msg :" na aaunga" , time :"09:05 AM", noti :0},
@@ -23,7 +24,9 @@ export default function Index() {
       <Filter/>
       <ScrollView className="mb-4">
         {dummyData.map((i,index)=>(
-          <ChatCard key={index} data={i}/>
+          <Link href={"/Chat"} key={index} className="mt-2 mx-3">
+            <ChatCard  data={i}/>
+          </Link>
         ))}
         <Text className="text-center text-gray-400 py-4">No more chats</Text>
       </ScrollView>
