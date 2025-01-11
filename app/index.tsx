@@ -24,7 +24,7 @@ export default function Index() {
       <Filter/>
       <ScrollView className="mb-4">
         {dummyData.map((i,index)=>(
-          <Link href={"/Chat"} key={index} className="mt-2 mx-3">
+          <Link href={`/chat/${i.name}`} key={index} className="mt-2 mx-3">
             <ChatCard  data={i}/>
           </Link>
         ))}

@@ -5,10 +5,11 @@ interface BaseMessage {
   timestamp: string;
 }
 
-interface ChatMessage extends BaseMessage {
+export interface ChatMessage extends BaseMessage {
   type: "chat";
   content: string;
   senderId: string;
+  to:string;
 }
 
 interface PingMessage extends BaseMessage {
@@ -27,7 +28,7 @@ const useWebSocket = (url: string) => {
   const reconnectCount = useRef<number>(0);
   const [status, setStatus] = useState("disconnected");
   const [message, setMessage] = useState<WebSocketMessage[]>([]);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<Error | null | string>(null);
 
   // function to connect to the websocket
 
@@ -49,8 +50,8 @@ const useWebSocket = (url: string) => {
       // if there is some message
       ws.current.onmessage = (MessageEvent: MessageEvent) => {
         try {
-          const msg = JSON.parse(MessageEvent.data);
-          setMessage([...message, msg]);
+          const msg = JSON.parse(MessageEvent.data); // fix the date structure
+          setMessage(prev=>[...prev, msg]);
         } catch (err) {
           setError(new Error("Invalid message format"));
         }
@@ -83,6 +84,37 @@ const useWebSocket = (url: string) => {
         }
       };
   }, [connectToWebSocket]);
+
+
+  // logic to send message
+  const sendMessage = (messageData: ChatMessage) => {
+    if (ws.current?.readyState === WebSocket.OPEN) {
+      const fullMessage = {
+        ...messageData,
+        timestamp: new Date().toISOString(),
+        to: messageData.to  
+      };
+      setMessage(prev=>[...prev,fullMessage])
+      ws.current.send(JSON.stringify(fullMessage));
+    } else {
+      setError(new Error('WebSocket is not connected'));
+    }
+  };
+
+  // pending reconnect logic .......
+
+  return{
+    status,
+    message,
+    error,
+    sendMessage,
+  }
+
+
 };
 
 export default useWebSocket;
+
+
+
+
